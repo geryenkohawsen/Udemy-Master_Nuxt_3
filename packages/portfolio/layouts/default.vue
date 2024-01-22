@@ -4,18 +4,8 @@
       <div>
         <NuxtLink to="/" class="p-2 text-xl font-semibold hover:bg-gray-200">Gery</NuxtLink>
       </div>
-
-      <nav class="font-mono">
-        <ul class="flex space-x-4">
-          <li>
-            <NuxtLink to="/">Main</NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/about">About</NuxtLink>
-          </li>
-        </ul>
-      </nav>
     </header>
+    <GhMenu />
 
     <main class="p-2">
       <slot />
