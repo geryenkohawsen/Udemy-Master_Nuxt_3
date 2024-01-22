@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "name": "ROOT",
+      "path": "../"
+    },
+    {
+      "name": "portfolio",
+      "path": "../packages/portfolio"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "packages/": true
+    }
+  }
+}
