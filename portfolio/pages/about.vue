@@ -3,8 +3,8 @@
 //   layout: 'another',
 // });
 
-// function enableCustomLayout() {
-//   setPageLayout('another');
+// function enableCustomLayout(): void {
+//   setPageLayout("another");
 // }
 </script>
 
