@@ -6,6 +6,10 @@
 // function enableCustomLayout(): void {
 //   setPageLayout("another");
 // }
+
+useHead({
+  title: 'About', // same as using useSeoMeta() composables
+})
 </script>
 
 <template>

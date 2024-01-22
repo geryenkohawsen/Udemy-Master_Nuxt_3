@@ -1,3 +1,20 @@
+<script setup lang="ts">
+useHead({
+  titleTemplate: '%s - Geryenko Hawsen',
+  link: [
+    {
+      rel: 'preconnect',
+      href: 'https://fonts.googleapis.com',
+    },
+    {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Roboto&display=swap', // TODO: Change to Nuxt Google Font module
+      crossorigin: '',
+    },
+  ],
+})
+</script>
+
 <template>
   <div class="container mx-auto max-w-2xl">
     <header class="mt-5 flex items-center justify-between">
@@ -12,3 +29,9 @@
     </main>
   </div>
 </template>
+
+<style>
+body {
+  font-family: 'Roboto', sans-serif;
+}
+</style>
