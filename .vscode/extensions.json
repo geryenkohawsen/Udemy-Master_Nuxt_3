@@ -1,12 +1,10 @@
 {
   "recommendations": [
-    "dbaeumer.vscode-eslint",
-    "mhutchie.git-graph",
-    "esbenp.prettier-vscode",
-    "bradlc.vscode-tailwindcss",
-    "gruntfuggly.todo-tree",
-    "vue.vscode-typescript-vue-plugin",
     "vue.volar",
-    "usernamehw.errorlens"
+    "vue.vscode-typescript-vue-plugin",
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "gruntfuggly.todo-tree"
   ]
 }

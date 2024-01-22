@@ -12,6 +12,12 @@
   "settings": {
     "files.exclude": {
       "packages/": true
+    },
+    "files.associations": {
+      "*.css": "tailwindcss" // Recommended VS Code settings by Tailwind CSS IntelliSense
+    },
+    "editor.quickSuggestions": {
+      "strings": "on" // Recommended VS Code settings by Tailwind CSS IntelliSense
     }
   }
 }
