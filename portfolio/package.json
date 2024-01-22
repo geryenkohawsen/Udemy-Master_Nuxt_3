@@ -8,14 +8,19 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint ."
+    "lint:js": "eslint --ext \".ts,.vue\" .",
+    "lint:prettier": "prettier --check .",
+    "lint": "yarn lint:js && yarn lint:prettier",
+    "lintfix": "prettier --write --list-different . && yarn lint:js --fix"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.2.0",
     "@nuxtjs/eslint-module": "^4.1.0",
     "@nuxtjs/tailwindcss": "^6.11.0",
     "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
     "nuxt": "^3.9.3",
+    "prettier": "^3.2.4",
     "vue": "^3.4.14",
     "vue-router": "^4.2.5"
   }
