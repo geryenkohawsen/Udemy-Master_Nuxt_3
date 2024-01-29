@@ -21,10 +21,10 @@ useHead({
       <div>
         <NuxtLink to="/" class="p-2 text-xl font-semibold hover:bg-gray-200">Gery</NuxtLink>
       </div>
+      <GhMenu />
     </header>
-    <GhMenu />
 
-    <main class="p-2">
+    <main class="mt-10 p-2">
       <slot />
     </main>
   </div>
