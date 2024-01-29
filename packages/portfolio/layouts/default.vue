@@ -13,6 +13,11 @@ useHead({
     },
   ],
 })
+
+const colorMode = useColorMode()
+
+console.log(colorMode.preference)
+colorMode.preference = 'light'
 </script>
 
 <template>
@@ -33,5 +38,9 @@ useHead({
 <style>
 body {
   font-family: 'Roboto', sans-serif;
+}
+
+body {
+  @apply bg-white text-gray-700 dark:bg-gray-900 dark:text-gray-300;
 }
 </style>
