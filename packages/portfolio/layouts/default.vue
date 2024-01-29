@@ -13,20 +13,21 @@ useHead({
     },
   ],
 })
-
-const colorMode = useColorMode()
-
-console.log(colorMode.preference)
-colorMode.preference = 'light'
 </script>
 
 <template>
   <div class="container mx-auto max-w-2xl">
     <header class="mt-5 flex items-center justify-between">
-      <div>
-        <NuxtLink to="/" class="p-2 text-xl font-semibold hover:bg-gray-200">Gery</NuxtLink>
+      <div class="flex items-center space-x-12">
+        <div>
+          <NuxtLink to="/" class="p-2 text-xl font-semibold hover:bg-gray-200">Gery</NuxtLink>
+        </div>
+        <GhMenu />
       </div>
-      <GhMenu />
+      <ClientOnly>
+        <!-- render color change on client only because color preference is store on the browser -->
+        <GhColorMode />
+      </ClientOnly>
     </header>
 
     <main class="mt-10 p-2">

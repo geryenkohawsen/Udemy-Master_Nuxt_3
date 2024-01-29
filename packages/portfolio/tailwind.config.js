@@ -2,7 +2,7 @@
 
 export default {
   content: ['./**/*.vue'],
-  darkmode: 'class',
+  darkMode: 'class',
   theme: {
     extend: {},
   },
