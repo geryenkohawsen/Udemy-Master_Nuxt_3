@@ -4,7 +4,7 @@ console.log('route --> ', route.params.slug)
 </script>
 
 <template>
-  <article class="prose prose-invert">
+  <article class="prose dark:prose-invert">
     <ContentDoc />
   </article>
 </template>
