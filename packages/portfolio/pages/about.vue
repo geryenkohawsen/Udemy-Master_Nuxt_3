@@ -1,5 +1,5 @@
 <template>
-  <article class="prose dark:prose-invert">
+  <article class="prose max-w-none dark:prose-invert">
     <ContentDoc path="/about" />
   </article>
 </template>
