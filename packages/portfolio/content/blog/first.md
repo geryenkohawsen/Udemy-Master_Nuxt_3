@@ -14,6 +14,7 @@ head:
     - name: 'og:title'
       content: 'This is an OpenGraph title'
 publishedAt: 2023-03-14 16:18:23
+toc: true
 ---
 
 # First post on our website
