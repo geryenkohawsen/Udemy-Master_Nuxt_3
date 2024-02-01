@@ -3,22 +3,14 @@ import type { TocLink } from '@nuxt/content/dist/runtime/types'
 
 interface Props {
   links?: Array<TocLink>
-  level?: {
-    type: number
-    default: number
-  }
+  level?: number
 }
 
 const route = useRoute()
 
 withDefaults(defineProps<Props>(), {
   links: () => [],
-  level: () => {
-    return {
-      type: 0,
-      default: 0,
-    }
-  },
+  level: 0,
 })
 </script>
 
@@ -28,7 +20,7 @@ withDefaults(defineProps<Props>(), {
       <NuxtLink :to="{ path: route.path, hash: `#${link.id}` }" :class="{ 'ml-4': level }">
         {{ link.text }}
       </NuxtLink>
-      <GhTocLinks :links="link.children" />
+      <GhTocLinks :links="link.children" :level="level + 1" />
     </li>
   </ul>
 </template>
