@@ -1,6 +1,31 @@
 <script setup lang="ts">
-const route = useRoute()
-console.log('route --> ', route.params.slug)
+const activeId = ref<string>('')
+
+onMounted(() => {
+  const callback = (entries: IntersectionObserverEntry[]) => {
+    // TODO: make into an array that catch all content below the headings
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        activeId.value = entry.target.id
+        console.log('activeId.value → ', activeId.value)
+        break
+      }
+    }
+  }
+
+  const observer = new IntersectionObserver(callback, {
+    root: null, // make whole document as root
+    threshold: 0.5, // 50% of the element should be visible
+  })
+
+  const elements = document.querySelectorAll('h2, h3')
+  elements.forEach(element => observer.observe(element))
+
+  // Clean up the observer when the component unmounts (moving to a new page)
+  onBeforeUnmount(() => {
+    elements.forEach(element => observer.unobserve(element))
+  })
+})
 </script>
 
 <template>
@@ -17,7 +42,7 @@ console.log('route --> ', route.params.slug)
           <aside class="sticky top-8">
             <div class="mb-2 font-semibold">Table of Contents</div>
             <nav>
-              <GhTocLinks :links="doc.body?.toc?.links" />
+              <GhTocLinks :links="doc.body?.toc?.links" :active-id="activeId" />
             </nav>
           </aside>
         </div>
