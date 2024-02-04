@@ -15,7 +15,7 @@ console.log('reposRawData --> ', reposRawData.value)
         <li
           v-for="repo in reposRawData"
           :key="repo.id"
-          class="rounded-sm border border-gray-200 p-4 font-mono hover:bg-gray-100"
+          class="rounded-sm border border-gray-300 p-4 font-mono hover:bg-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
         >
           <a :href="repo.html_url" target="_blank">
             <div class="flex items-center justify-between">
