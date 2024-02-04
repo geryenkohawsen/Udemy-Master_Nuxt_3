@@ -1,7 +1,9 @@
 <script setup lang="ts">
-const props = defineProps<{
+interface Props {
   limit?: number
-}>()
+}
+
+const props = defineProps<Props>()
 
 const { data } = await useAsyncData('blog-list', () => {
   const query = queryContent('/blog')
