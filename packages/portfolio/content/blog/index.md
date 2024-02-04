@@ -1,6 +1,7 @@
 ---
 title: 'Blog Posts'
 description: "List of Geryenko Hawsen's blog posts"
+toc: false
 ---
 
 # Blog Posts
