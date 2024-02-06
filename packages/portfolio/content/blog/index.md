@@ -1,6 +1,6 @@
 ---
 title: 'Blog Posts'
-description: "List of Geryenko Hawsen's blog posts"
+description: "List of Gery's blog posts"
 toc: false
 ---
 

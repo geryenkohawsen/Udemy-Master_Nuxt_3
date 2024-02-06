@@ -1,5 +1,5 @@
 ---
-title: 'Title of the page'
+title: 'Test MD Page'
 description: 'meta description of the page'
 head:
   meta:
@@ -17,17 +17,17 @@ publishedAt: 2023-03-14 16:18:23
 toc: true
 ---
 
-# First post on our website
+# First post on the website
 
-## Introduction
+## Italic
 
 This is some text. _This is italic_.
 
-## Second Part
+## Bold
 
 Something more. **This is bold**.
 
-### Also try lists
+### Test 箇条書き
 
 Unordered lists:
 
@@ -41,11 +41,11 @@ Numbered lists:
 
 Todo list:
 
-- [ ] Buy groceries
-- [ ] Pay bills
+- [ ] ファミチキ
+- [ ] メロンパン
 
 Tables:
-| Name | Surname |
+| First name | Last name |
 |--|--|
 | Geryenko | Hawsen |
 
