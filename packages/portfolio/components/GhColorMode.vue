@@ -34,7 +34,7 @@ function toggleMode(): void {
   <div class="flex items-center space-x-2">
     <div v-if="showNextModeLabel" class="text-xs text-gray-500">Change to {{ nextMode }}</div>
     <button
-      class="px-2 py-1 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600"
+      class="px-2 py-1 text-4xl text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600 md:text-base"
       @click="toggleMode"
       @mouseenter="showNextModeLabel = true"
       @mouseleave="showNextModeLabel = false"
