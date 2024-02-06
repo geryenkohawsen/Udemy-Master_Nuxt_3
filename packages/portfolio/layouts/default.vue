@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { SpeedInsights } from '@vercel/speed-insights/vue'
+
 useHead({
   titleTemplate: '%s - Geryenko Hawsen',
   link: [
@@ -33,6 +35,7 @@ useHead({
     <main class="mt-10 p-2">
       <slot />
     </main>
+    <SpeedInsights />
   </div>
 </template>
 
