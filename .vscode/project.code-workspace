@@ -7,6 +7,10 @@
     {
       "name": "portfolio",
       "path": "../packages/portfolio"
+    },
+    {
+      "name": "finance-tracker",
+      "path": "../packages/finance-tracker"
     }
   ],
   "settings": {
