@@ -19,15 +19,14 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-/**
- *current trend flag
- */
+// current trend flag
 const isTrendingUp = computed(() => props.amount >= props.lastAmount)
 
-/**
- * icon to use base on current trend
- */
+// icon to use base on current trend
 const icon = computed(() => (isTrendingUp.value ? 'i-heroicons-arrow-trending-up' : 'i-heroicons-arrow-trending-down'))
+
+// amount in locale format and currency symbol
+const localeAmount = useLocaleCurrency(props.amount)
 
 // current trend percentage
 const percentageTrend = computed(() => {
@@ -37,6 +36,7 @@ const percentageTrend = computed(() => {
   const lower = Math.min(props.amount, props.lastAmount)
   const ratio = (higher - lower) / lower
   const roundedRatioPercentage = Math.ceil(ratio * 100)
+
   return roundedRatioPercentage
 })
 </script>
@@ -46,7 +46,7 @@ const percentageTrend = computed(() => {
     <div class="font-bold" :class="{ green: isTrendingUp, red: !isTrendingUp }">{{ props.title }}</div>
     <div class="mb-2 text-2xl font-extrabold text-black dark:text-white">
       <USkeleton v-if="props.isLoading" class="h-8 w-full" />
-      <div v-else>{{ props.amount }}</div>
+      <div v-else>{{ localeAmount }}</div>
     </div>
     <div>
       <USkeleton v-if="props.isLoading" class="h-6 w-full" />
