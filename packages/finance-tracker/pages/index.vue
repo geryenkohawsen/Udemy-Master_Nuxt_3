@@ -12,10 +12,10 @@ const selectedTransactionView = ref(transactionViewOptions[1])
     </section>
 
     <section class="mb-10 grid grid-cols-1 sm:grid-cols-2 sm:gap-16 lg:grid-cols-4">
-      <AppTrend color="green" title="Income" :amount="4000" :last-amount="3000" :is-loading="false" />
-      <AppTrend color="red" title="Income" :amount="4000" :last-amount="3000" :is-loading="false" />
-      <AppTrend color="green" title="Income" :amount="4000" :last-amount="3000" :is-loading="false" />
-      <AppTrend color="red" title="Income" :amount="4000" :last-amount="3000" :is-loading="true" />
+      <AppTrend title="Income" :amount="4000" :last-amount="3000" :is-loading="false" />
+      <AppTrend title="Expense" :amount="4000" :last-amount="5000" :is-loading="false" />
+      <AppTrend title="Investments" :amount="4000" :last-amount="3000" :is-loading="false" />
+      <AppTrend title="Saving" :amount="4000" :last-amount="4200" :is-loading="false" />
     </section>
   </div>
 </template>
