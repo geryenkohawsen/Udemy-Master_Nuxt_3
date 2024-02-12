@@ -29,15 +29,16 @@ Something more. **This is bold**.
 
 ### Test 箇条書き
 
-Unordered lists:
+Bucket list:
 
-- Do the work
-- Collect benefits
+- Be nice
+- Be humble
 
-Numbered lists:
+2024 list:
 
-1.  Pay taxes
-2.  Die
+1. New mouse
+2. New keyboard
+3. New GitHub profile
 
 Todo list:
 
