@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxt/ui'],
+  modules: ['@nuxtjs/eslint-module', '@nuxt/ui'],
   components: [{ path: '~/components', pathPrefix: false }],
+  eslint: {
+    lintOnStart: false,
+  },
 });

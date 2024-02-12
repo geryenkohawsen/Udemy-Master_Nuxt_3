@@ -23,6 +23,7 @@
     "css.customData": [".vscode/tailwind.json"],
     "editor.quickSuggestions": {
       "strings": "on" // Recommended VS Code settings by Tailwind CSS IntelliSense
-    }
+    },
+    "tailwindCSS.classAttributes": ["class", "className", "ngClass", "ui"]
   }
 }
