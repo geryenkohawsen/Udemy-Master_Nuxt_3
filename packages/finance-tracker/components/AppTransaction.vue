@@ -1,12 +1,12 @@
 <script setup lang="ts">
-interface Props {
+const props = defineProps<{
   /**
    * Transaction history
    */
   transaction: Transaction
-}
-const props = defineProps<Props>()
+}>()
 
+const isIncome = computed(() => props.transaction.type.toLowerCase() === 'income')
 const currency = useLocaleCurrency(props.transaction.amount)
 const items = [
   [
@@ -28,7 +28,10 @@ const items = [
   <div class="grid grid-cols-2 border-b border-gray-200 py-4 text-gray-900 dark:border-gray-600 dark:text-gray-100">
     <div class="flex items-center justify-between">
       <div class="flex items-center">
-        <UIcon name="i-heroicons-arrow-up-right" class="text-green-600" />
+        <UIcon
+          :name="isIncome ? 'i-heroicons-arrow-up-right' : 'i-heroicons-arrow-down-left'"
+          :class="isIncome ? 'text-green-600' : 'text-red-600'"
+        />
         <div>{{ props.transaction.description }}</div>
       </div>
 
