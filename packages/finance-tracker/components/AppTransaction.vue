@@ -1,5 +1,13 @@
 <script setup lang="ts">
-const currency = useLocaleCurrency(3000)
+interface Props {
+  /**
+   * Transaction history
+   */
+  transaction: Transaction
+}
+const props = defineProps<Props>()
+
+const currency = useLocaleCurrency(props.transaction.amount)
 const items = [
   [
     {
@@ -21,11 +29,11 @@ const items = [
     <div class="flex items-center justify-between">
       <div class="flex items-center">
         <UIcon name="i-heroicons-arrow-up-right" class="text-green-600" />
-        <div>Salary</div>
+        <div>{{ props.transaction.description }}</div>
       </div>
 
       <div>
-        <UBadge color="white">Category</UBadge>
+        <UBadge v-if="props.transaction.description" color="white">{{ props.transaction.category }}</UBadge>
       </div>
     </div>
 

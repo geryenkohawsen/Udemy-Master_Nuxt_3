@@ -1,5 +1,19 @@
 <script setup lang="ts">
 const selectedTransactionView = ref(transactionViewOptions[1])
+
+const supabase = useSupabaseClient()
+const transactions = ref<Transaction[]>([])
+
+const { data, pending } = await useAsyncData('transactions', async () => {
+  const { data, error } = await supabase.from('transactions').select()
+  if (error) {
+    console.log('error → ', error)
+    return []
+  }
+  return data
+})
+
+if (data.value) transactions.value = data.value
 </script>
 
 <template>
@@ -19,10 +33,7 @@ const selectedTransactionView = ref(transactionViewOptions[1])
     </section>
 
     <section>
-      <AppTransaction />
-      <AppTransaction />
-      <AppTransaction />
-      <AppTransaction />
+      <AppTransaction v-for="transaction in transactions" :key="transaction.id" :transaction="transaction" />
     </section>
   </div>
 </template>
