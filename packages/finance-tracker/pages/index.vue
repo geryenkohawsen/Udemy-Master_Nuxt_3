@@ -17,5 +17,12 @@ const selectedTransactionView = ref(transactionViewOptions[1])
       <AppTrend title="Investments" :amount="4000" :last-amount="3000" :is-loading="false" />
       <AppTrend title="Saving" :amount="4000" :last-amount="4200" :is-loading="false" />
     </section>
+
+    <section>
+      <AppTransaction />
+      <AppTransaction />
+      <AppTransaction />
+      <AppTransaction />
+    </section>
   </div>
 </template>
