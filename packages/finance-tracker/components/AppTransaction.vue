@@ -36,7 +36,7 @@ const items = [
       </div>
 
       <div>
-        <UBadge v-if="props.transaction.description" color="white">{{ props.transaction.category }}</UBadge>
+        <UBadge v-if="props.transaction.category" color="white">{{ props.transaction.category }}</UBadge>
       </div>
     </div>
 
