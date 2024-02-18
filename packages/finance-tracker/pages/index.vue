@@ -2,21 +2,40 @@
 const selectedTransactionView = ref(transactionViewOptions[1])
 
 const supabase = useSupabaseClient()
-const transactions = ref<Transaction[]>([])
+const transactions = ref<Transaction[] | undefined>([])
+const isLoading = ref<boolean>(false)
 
-const { data, pending } = await useAsyncData('transactions', async () => {
-  const { data, error } = await supabase.from('transactions').select()
-  if (error) {
-    console.log('error → ', error)
-    return []
+const fetchTransactions = async (): Promise<Transaction[] | undefined> => {
+  isLoading.value = true
+  try {
+    const { data } = await useAsyncData('transactions', async () => {
+      const { data, error } = await supabase.from('transactions').select()
+
+      if (error) return []
+
+      return data as Transaction[]
+    })
+
+    if (data.value) return data.value
+  } catch (error) {
+    console.error('Fetch Transactions Error:', error)
+    // TODO: Handle the error appropriately here
+    // e.g., setErrorState(error), showErrorMessage(...)
+    return undefined
+  } finally {
+    isLoading.value = false
   }
-  return data
-})
+}
 
-if (data.value) transactions.value = data.value
+const refreshTransactions = async (): Promise<void> => {
+  transactions.value = await fetchTransactions()
+}
+await refreshTransactions()
 
 // sorted transactions base on date
 const transactionsGroupedByDate = computed(() => {
+  if (!transactions.value) return undefined
+
   const grouped = {} as { [key: string]: Transaction[] }
 
   for (const transaction of transactions.value) {
@@ -49,16 +68,24 @@ console.log('transactionsGroupedByDate → ', transactionsGroupedByDate.value)
     </section>
 
     <section class="mb-10 grid grid-cols-1 sm:grid-cols-2 sm:gap-16 lg:grid-cols-4">
-      <AppTrend title="Income" :amount="4000" :last-amount="3000" :is-loading="false" />
-      <AppTrend title="Expense" :amount="4000" :last-amount="5000" :is-loading="false" />
-      <AppTrend title="Investments" :amount="4000" :last-amount="3000" :is-loading="false" />
-      <AppTrend title="Saving" :amount="4000" :last-amount="4200" :is-loading="false" />
+      <AppTrend title="Income" :amount="4000" :last-amount="3000" :is-loading="isLoading" />
+      <AppTrend title="Expense" :amount="4000" :last-amount="5000" :is-loading="isLoading" />
+      <AppTrend title="Investments" :amount="4000" :last-amount="3000" :is-loading="isLoading" />
+      <AppTrend title="Saving" :amount="4000" :last-amount="4200" :is-loading="isLoading" />
     </section>
 
-    <section>
+    <section v-if="isLoading">
+      <USkeleton v-for="i in 4" :key="i" class="mb-2 h-8 w-full" />
+    </section>
+    <section v-else>
       <div v-for="(transactionsByDate, date) in transactionsGroupedByDate" :key="date">
         <AppDailyTransactionSummary :date="date.toString()" :transactions="transactionsByDate" />
-        <AppTransaction v-for="transaction in transactionsByDate" :key="transaction.id" :transaction="transaction" />
+        <AppTransaction
+          v-for="transaction in transactionsByDate"
+          :key="transaction.id"
+          :transaction="transaction"
+          @deleted="refreshTransactions"
+        />
       </div>
     </section>
   </div>

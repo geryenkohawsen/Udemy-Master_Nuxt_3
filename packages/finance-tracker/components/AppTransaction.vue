@@ -6,6 +6,8 @@ const props = defineProps<{
   transaction: Transaction
 }>()
 
+const emit = defineEmits(['deleted'])
+
 const isIncome = computed(() => props.transaction.type.toLowerCase() === 'income')
 const currency = useLocaleCurrency(props.transaction.amount)
 
@@ -23,6 +25,7 @@ async function deleteTransaction(): Promise<void> {
       icon: 'i-heroicons-check-circle',
       color: 'green',
     })
+    emit('deleted', props.transaction.id)
   } catch (error) {
     toast.add({
       title: 'Transaction delete!',
