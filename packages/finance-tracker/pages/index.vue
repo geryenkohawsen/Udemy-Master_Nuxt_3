@@ -14,6 +14,26 @@ const { data, pending } = await useAsyncData('transactions', async () => {
 })
 
 if (data.value) transactions.value = data.value
+
+// sorted transactions base on date
+const transactionsGroupedByDate = computed(() => {
+  const grouped = {} as { [key: string]: Transaction[] }
+
+  for (const transaction of transactions.value) {
+    // take only date data from tie ISO format
+    const date = new Date(transaction.created_at).toISOString().split('T')[0]
+
+    // add date as object key if there is none yet
+    if (!grouped[date]) grouped[date] = []
+
+    // add transaction to grouped object
+    grouped[date].push(transaction)
+  }
+
+  return grouped
+})
+
+console.log('transactionsGroupedByDate → ', transactionsGroupedByDate.value)
 </script>
 
 <template>
