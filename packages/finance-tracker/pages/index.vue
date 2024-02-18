@@ -53,7 +53,10 @@ console.log('transactionsGroupedByDate → ', transactionsGroupedByDate.value)
     </section>
 
     <section>
-      <AppTransaction v-for="transaction in transactions" :key="transaction.id" :transaction="transaction" />
+      <div v-for="(transactionsByDate, date) in transactionsGroupedByDate" :key="date">
+        <AppDailyTransactionSummary :date="date.toString()" :transactions="transactionsByDate" />
+        <AppTransaction v-for="transaction in transactionsByDate" :key="transaction.id" :transaction="transaction" />
+      </div>
     </section>
   </div>
 </template>
