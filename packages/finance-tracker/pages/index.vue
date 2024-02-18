@@ -30,6 +30,9 @@ const transactionsGroupedByDate = computed(() => {
     grouped[date].push(transaction)
   }
 
+  // TODO: sort key from latest date
+  console.log('grouped → ', grouped)
+
   return grouped
 })
 

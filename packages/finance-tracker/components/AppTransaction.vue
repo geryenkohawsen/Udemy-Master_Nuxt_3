@@ -34,7 +34,7 @@ async function deleteTransaction(): Promise<void> {
   }
 }
 
-const items = [
+const optionItems = [
   [
     {
       label: 'Edit',
@@ -69,7 +69,7 @@ const items = [
     <div class="flex items-center justify-end gap-x-2">
       <div>{{ currency }}</div>
       <div>
-        <UDropdown :items="items" :popper="{ placement: 'bottom-start' }">
+        <UDropdown :items="optionItems" :popper="{ placement: 'bottom-start' }">
           <UButton color="white" variant="ghost" trailing-icon="i-heroicons-ellipsis-horizontal" :loading="isLoading" />
         </UDropdown>
       </div>
