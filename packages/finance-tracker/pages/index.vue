@@ -4,6 +4,14 @@ const selectedTransactionView = ref(transactionViewOptions[1])
 const supabase = useSupabaseClient()
 const transactions = ref<Transaction[] | undefined>([])
 const isLoading = ref<boolean>(false)
+const isPageValid = ref<boolean>(false)
+
+const income = computed(() => transactions.value?.filter(t => t.type === 'income'))
+const incomeCount = computed(() => income.value?.length)
+const incomeTotal = computed(() => income.value?.reduce((sum, t) => sum + t.amount, 0))
+const expense = computed(() => transactions.value?.filter(t => t.type === 'expense'))
+const expenseCount = computed(() => expense.value?.length)
+const expenseTotal = computed(() => income.value?.reduce((sum, t) => sum + t.amount, 0))
 
 const fetchTransactions = async (): Promise<Transaction[] | undefined> => {
   isLoading.value = true
@@ -68,10 +76,21 @@ console.log('transactionsGroupedByDate → ', transactionsGroupedByDate.value)
     </section>
 
     <section class="mb-10 grid grid-cols-1 sm:grid-cols-2 sm:gap-16 lg:grid-cols-4">
-      <AppTrend title="Income" :amount="4000" :last-amount="3000" :is-loading="isLoading" />
-      <AppTrend title="Expense" :amount="4000" :last-amount="5000" :is-loading="isLoading" />
+      <AppTrend title="Income" :amount="incomeTotal" :last-amount="3000" :is-loading="isLoading" />
+      <AppTrend title="Expense" :amount="expenseTotal" :last-amount="5000" :is-loading="isLoading" />
       <AppTrend title="Investments" :amount="4000" :last-amount="3000" :is-loading="isLoading" />
       <AppTrend title="Saving" :amount="4000" :last-amount="4200" :is-loading="isLoading" />
+    </section>
+
+    <section class="mb-10 flex justify-between">
+      <div>
+        <h2 class="text-2xl font-extrabold">Transactions</h2>
+        <div class="text-gray-500 dark:text-gray-400">
+          You have {{ incomeCount }} incomes and {{ expenseCount }} expense this period
+        </div>
+      </div>
+
+      <div><UButton icon="i-heroicons-plus-circle" color="white" variant="solid" label="Add" /></div>
     </section>
 
     <section v-if="isLoading">
