@@ -5,6 +5,7 @@ const supabase = useSupabaseClient()
 const transactions = ref<Transaction[] | undefined>([])
 const isLoading = ref<boolean>(false)
 const isPageValid = ref<boolean>(false)
+const isModalOpen = ref<boolean>(false)
 
 const income = computed(() => transactions.value?.filter(t => t.type === 'income'))
 const incomeCount = computed(() => income.value?.length)
@@ -90,7 +91,12 @@ console.log('transactionsGroupedByDate → ', transactionsGroupedByDate.value)
         <div class="text-gray-500 dark:text-gray-400">You have {{ incomeCount }} incomes and {{ expenseCount }} expense this period</div>
       </div>
       <div>
-        <UButton icon="i-heroicons-plus-circle" color="white" variant="solid" label="Add" />
+        <UModal v-model="isModalOpen">
+          <UCard>
+            <template #header>Add Transaction</template>
+          </UCard>
+        </UModal>
+        <UButton icon="i-heroicons-plus-circle" color="white" variant="solid" label="Add" @click="isModalOpen = true" />
       </div>
     </section>
 
