@@ -91,11 +91,7 @@ console.log('transactionsGroupedByDate → ', transactionsGroupedByDate.value)
         <div class="text-gray-500 dark:text-gray-400">You have {{ incomeCount }} incomes and {{ expenseCount }} expense this period</div>
       </div>
       <div>
-        <UModal v-model="isModalOpen">
-          <UCard>
-            <template #header>Add Transaction</template>
-          </UCard>
-        </UModal>
+        <AppTransactionModal v-model:is-open="isModalOpen" />
         <UButton icon="i-heroicons-plus-circle" color="white" variant="solid" label="Add" @click="isModalOpen = true" />
       </div>
     </section>
