@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const selectedTransactionView = ref(transactionViewOptions[1])
+const selectedTransactionView = ref(CONST.TRANSACTION_VIEW_OPTIONS[1])
 
 const supabase = useSupabaseClient()
 const transactions = ref<Transaction[] | undefined>([])
@@ -72,7 +72,7 @@ console.log('transactionsGroupedByDate → ', transactionsGroupedByDate.value)
     <section class="mb-10 flex items-center justify-between">
       <h1 class="text-4xl font-extrabold">Summary</h1>
       <div>
-        <USelectMenu v-model="selectedTransactionView" :options="transactionViewOptions" />
+        <USelectMenu v-model="selectedTransactionView" :options="CONST.TRANSACTION_VIEW_OPTIONS" />
       </div>
     </section>
 
