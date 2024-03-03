@@ -4,7 +4,7 @@ const selectedTransactionView = ref(CONST.TRANSACTION_VIEW_OPTIONS[1])
 const supabase = useSupabaseClient()
 const transactions = ref<Transaction[] | undefined>([])
 const isLoading = ref<boolean>(false)
-const isPageValid = ref<boolean>(false)
+// const isPageValid = ref<boolean>(false)
 const isModalOpen = ref<boolean>(false)
 
 const income = computed(() => transactions.value?.filter(t => t.type === 'income'))
