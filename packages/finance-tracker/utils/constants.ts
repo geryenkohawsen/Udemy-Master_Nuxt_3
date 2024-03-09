@@ -1,9 +1,9 @@
 const transactionViewOptions = ['Yearly', 'Monthly', 'Daily']
-const categories = ['Food', 'Housing', 'Car', 'Entertainment', 'Transport']
+const expenseCategories = ['Food', 'Housing', 'Car', 'Entertainment', 'Transport']
 const transactionTypes = ['Income', 'Expense', 'Saving', 'Investment']
 
 export const CONST = {
-  CATEGORIES: categories,
+  EXPENSE_CATEGORIES: expenseCategories,
   TRANSACTION_VIEW_OPTIONS: transactionViewOptions,
   TRANSACTION_TYPES: transactionTypes,
 }

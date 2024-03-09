@@ -1,5 +1,38 @@
 <script setup lang="ts">
+import { z } from 'zod'
+
 const isOpen = defineModel<boolean>('isOpen')
+
+const formDefaultSchema = z.object({
+  amount: z.number().positive('Amount needs to be more than 0'),
+  created_at: z.string(),
+  description: z.string().optional(),
+})
+
+const incomeSchema = z.object({
+  type: z.literal('Income'),
+})
+
+const expenseSchema = z.object({
+  type: z.literal('Expense'),
+  category: z.enum(['Food', 'Housing', 'Car', 'Entertainment', 'Transport']),
+})
+
+const savingSchema = z.object({
+  type: z.literal('Saving'),
+})
+
+const investmentSchema = z.object({
+  type: z.literal('Investment'),
+})
+
+const formSchema = z.intersection(z.discriminatedUnion('type', [incomeSchema, expenseSchema, savingSchema, investmentSchema]), formDefaultSchema)
+
+const form = ref()
+
+async function save() {
+  form.value.validate()
+}
 
 const formState = ref({
   type: undefined,
@@ -15,7 +48,7 @@ const formState = ref({
     <UCard>
       <template #header>Add Transaction</template>
 
-      <UForm :state-="formState" class="flex flex-col gap-4">
+      <UForm ref="form" :state="formState" :schema="formSchema" class="flex flex-col gap-4" @submit.prevent="save">
         <UFormGroup label="Transaction Type" :required="true" name="type">
           <USelect v-model="formState.type" type="number" placeholder="Select the transaction Type" :options="CONST.TRANSACTION_TYPES" />
         </UFormGroup>
@@ -32,8 +65,8 @@ const formState = ref({
           <UInput v-model="formState.description" placeholder="Description" />
         </UFormGroup>
 
-        <UFormGroup label="Category" :required="true" name="category">
-          <USelect v-model="formState.category" placeholder="Category" :options="CONST.CATEGORIES" />
+        <UFormGroup v-if="formState.type === 'Expense'" label="Category" :required="true" name="category">
+          <USelect v-model="formState.category" placeholder="Category" :options="CONST.EXPENSE_CATEGORIES" />
         </UFormGroup>
 
         <UButton type="submit" color="black" variant="solid" label="Save" />
