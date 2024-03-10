@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { z } from 'zod'
 
-const isOpen = defineModel<boolean>('isOpen')
+const isOpen = defineModel<boolean>('isOpen', {
+  set(value) {
+    if (!value) resetForm()
+    else return value
+  },
+})
 
 const formDefaultSchema = z.object({
   amount: z.number().positive('Amount needs to be more than 0'),
@@ -31,16 +36,27 @@ const formSchema = z.intersection(z.discriminatedUnion('type', [incomeSchema, ex
 const form = ref()
 
 async function save() {
+  if (form.value.errors.length) return
+
+  // Store into Supabase
   form.value.validate()
 }
 
-const formState = ref({
+const initialState = {
   type: undefined,
   amount: 0,
   created_at: undefined,
   description: undefined,
   category: undefined,
+}
+const formState = ref({
+  ...initialState,
 })
+
+function resetForm(): void {
+  Object.assign(formState.value, initialState)
+  form.value.clear()
+}
 </script>
 
 <template>
