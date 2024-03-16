@@ -11,7 +11,8 @@
     "lint:js": "eslint --ext \".ts,.vue\" .",
     "lint:prettier": "prettier --check .",
     "lint": "yarn lint:js && yarn lint:prettier",
-    "lintfix": "prettier --write --list-different . && yarn lint:js --fix"
+    "lintfix": "prettier --write --list-different . && yarn lint:js --fix",
+    "seed": "node seed.mjs"
   },
   "dependencies": {
     "@nuxt/eslint-config": "^0.2.0",
@@ -26,6 +27,7 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@nuxtjs/supabase": "^1.1.6",
     "zod": "^3.22.4"
   }
