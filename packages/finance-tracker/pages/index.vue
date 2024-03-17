@@ -7,10 +7,10 @@ const isLoading = ref<boolean>(false)
 // const isPageValid = ref<boolean>(false)
 const isModalOpen = ref<boolean>(false)
 
-const income = computed(() => transactions.value?.filter(t => t.type === 'income'))
+const income = computed(() => transactions.value?.filter(t => t.type === 'Income'))
 const incomeCount = computed(() => income.value?.length)
 const incomeTotal = computed(() => income.value?.reduce((sum, t) => sum + t.amount, 0))
-const expense = computed(() => transactions.value?.filter(t => t.type === 'expense'))
+const expense = computed(() => transactions.value?.filter(t => t.type === 'Expense'))
 const expenseCount = computed(() => expense.value?.length)
 const expenseTotal = computed(() => income.value?.reduce((sum, t) => sum + t.amount, 0))
 
@@ -91,7 +91,7 @@ console.log('transactionsGroupedByDate → ', transactionsGroupedByDate.value)
         <div class="text-gray-500 dark:text-gray-400">You have {{ incomeCount }} incomes and {{ expenseCount }} expense this period</div>
       </div>
       <div>
-        <AppTransactionModal v-model:is-open="isModalOpen" />
+        <AppTransactionModal v-model:is-open="isModalOpen" @saved="refreshTransactions" />
         <UButton icon="i-heroicons-plus-circle" color="white" variant="solid" label="Add" @click="isModalOpen = true" />
       </div>
     </section>

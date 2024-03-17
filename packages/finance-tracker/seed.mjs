@@ -26,24 +26,24 @@ async function seedTransactions() {
       const typeBias = Math.random()
 
       if (typeBias < 0.85) {
-        type = 'expense'
+        type = 'Expense'
         category = faker.helpers.arrayElement(categories) // Category only for 'Expense'
       } else if (typeBias < 0.95) {
-        type = 'income'
+        type = 'Income'
       } else {
-        type = faker.helpers.arrayElement(['saving', 'investment'])
+        type = faker.helpers.arrayElement(['Saving', 'Investment'])
       }
 
       let amount
       switch (type) {
-        case 'income':
+        case 'Income':
           amount = faker.number.int({ min: 2000, max: 5000 })
           break
-        case 'expense':
+        case 'Expense':
           amount = faker.number.int({ min: 100, max: 1000 })
           break
-        case 'saving':
-        case 'investment':
+        case 'Saving':
+        case 'Investment':
           amount = faker.number.int({ min: 5000, max: 10000 })
           break
         default:

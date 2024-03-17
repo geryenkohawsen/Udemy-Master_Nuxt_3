@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { z } from 'zod'
 
+const emit = defineEmits(['saved'])
+
 const isOpen = defineModel<boolean>('isOpen', {
   set(value) {
     if (!value) resetForm()
@@ -34,12 +36,36 @@ const investmentSchema = z.object({
 const formSchema = z.intersection(z.discriminatedUnion('type', [incomeSchema, expenseSchema, savingSchema, investmentSchema]), formDefaultSchema)
 
 const form = ref()
+const isLoading = ref(false)
+const supabase = useSupabaseClient()
+const toast = useToast()
 
 async function save() {
   if (form.value.errors.length) return
 
+  isLoading.value = true
+  try {
+    const { error } = await supabase.from('transactions').upsert({ ...formState.value })
+
+    if (!error) {
+      toast.add({
+        title: 'Transaction Saved',
+        icon: 'i-heroicons-check-circle',
+      })
+      isOpen.value = false
+      emit('saved')
+    }
+  } catch (error: any) {
+    toast.add({
+      title: 'Transaction not saved',
+      description: error.message,
+      icon: 'i-heroicons-exclamation-circle',
+    })
+  } finally {
+    isLoading.value = false
+  }
+
   // Store into Supabase
-  form.value.validate()
 }
 
 const initialState = {
@@ -64,7 +90,7 @@ function resetForm(): void {
     <UCard>
       <template #header>Add Transaction</template>
 
-      <UForm ref="form" :state="formState" :schema="formSchema" class="flex flex-col gap-4" @submit.prevent="save">
+      <UForm ref="form" :state="formState" :schema="formSchema" class="flex flex-col gap-4" @submit="save">
         <UFormGroup label="Transaction Type" :required="true" name="type">
           <USelect v-model="formState.type" type="number" placeholder="Select the transaction Type" :options="CONST.TRANSACTION_TYPES" />
         </UFormGroup>
@@ -85,7 +111,7 @@ function resetForm(): void {
           <USelect v-model="formState.category" placeholder="Category" :options="CONST.EXPENSE_CATEGORIES" />
         </UFormGroup>
 
-        <UButton type="submit" color="black" variant="solid" label="Save" />
+        <UButton type="submit" color="black" variant="solid" label="Save" :loading="isLoading" />
       </UForm>
     </UCard>
   </UModal>
