@@ -18,6 +18,7 @@ interface Props {
   isLoading: boolean
 }
 const props = defineProps<Props>()
+const { amount } = toRefs(props)
 
 // current trend flag
 const isTrendingUp = computed(() => props.amount >= props.lastAmount)
@@ -26,7 +27,7 @@ const isTrendingUp = computed(() => props.amount >= props.lastAmount)
 const icon = computed(() => (isTrendingUp.value ? 'i-heroicons-arrow-trending-up' : 'i-heroicons-arrow-trending-down'))
 
 // amount in locale format and currency symbol
-const localeAmount = useLocaleCurrency(props.amount)
+const localeAmount = useLocaleCurrency(amount)
 
 // current trend percentage
 const percentageTrend = computed(() => {
