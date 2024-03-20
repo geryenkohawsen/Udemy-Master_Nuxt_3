@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const selectedTransactionView = ref(CONST.TRANSACTION_VIEW_OPTIONS[1])
-
+const dates = useSelectedTimePeriod(selectedTransactionView.value)
 const isModalOpen = ref<boolean>(false)
 
 const {
