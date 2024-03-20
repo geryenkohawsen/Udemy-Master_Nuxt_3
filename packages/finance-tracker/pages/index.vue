@@ -1,7 +1,9 @@
 <script setup lang="ts">
 const selectedTransactionView = ref(CONST.TRANSACTION_VIEW_OPTIONS[1])
-const dates = useSelectedTimePeriod(selectedTransactionView.value)
+const { current, previous } = useSelectedTimePeriod(selectedTransactionView)
 const isModalOpen = ref<boolean>(false)
+
+console.log('current --> ', current.value)
 
 const {
   pending,
@@ -13,9 +15,11 @@ const {
     expenseTotal,
     grouped: { byDate },
   },
-} = useFetchTransactions()
+} = useFetchTransactions(current)
 
-await refreshTransactions()
+const {
+  transactions: { incomeTotal: prevIncomeTotal, expenseTotal: prevExpenseTotal },
+} = useFetchTransactions(previous)
 </script>
 
 <template>
@@ -28,9 +32,21 @@ await refreshTransactions()
     </section>
 
     <section class="mb-10 grid grid-cols-1 sm:grid-cols-2 sm:gap-16 lg:grid-cols-4">
-      <AppTrend v-if="incomeTotal" title="Income" :amount="incomeTotal" :last-amount="3000" :is-loading="pending" />
+      <AppTrend
+        v-if="incomeTotal && prevIncomeTotal"
+        title="Income"
+        :amount="incomeTotal"
+        :last-amount="prevIncomeTotal"
+        :is-loading="pending"
+      />
       <USkeleton v-else class="h-full w-full" />
-      <AppTrend v-if="expenseTotal" title="Expense" :amount="expenseTotal" :last-amount="5000" :is-loading="pending" />
+      <AppTrend
+        v-if="expenseTotal && prevExpenseTotal"
+        title="Expense"
+        :amount="expenseTotal"
+        :last-amount="prevExpenseTotal"
+        :is-loading="pending"
+      />
       <USkeleton v-else class="h-full w-full" />
       <AppTrend title="Investments" :amount="4000" :last-amount="3000" :is-loading="pending" />
       <AppTrend title="Saving" :amount="4000" :last-amount="4200" :is-loading="pending" />
@@ -39,7 +55,9 @@ await refreshTransactions()
     <section class="mb-10 flex justify-between">
       <div>
         <h2 class="text-2xl font-extrabold">Transactions</h2>
-        <div class="text-gray-500 dark:text-gray-400">You have {{ incomeCount }} incomes and {{ expenseCount }} expense this period</div>
+        <div class="text-gray-500 dark:text-gray-400">
+          You have {{ incomeCount }} incomes and {{ expenseCount }} expense this period
+        </div>
       </div>
       <div>
         <AppTransactionModal v-model:is-open="isModalOpen" @saved="refreshTransactions" />
@@ -53,7 +71,12 @@ await refreshTransactions()
     <section v-else>
       <div v-for="(transactionsByDate, date) in byDate" :key="date">
         <AppDailyTransactionSummary :date="date.toString()" :transactions="transactionsByDate" />
-        <AppTransaction v-for="transaction in transactionsByDate" :key="transaction.id" :transaction="transaction" @deleted="refreshTransactions" />
+        <AppTransaction
+          v-for="transaction in transactionsByDate"
+          :key="transaction.id"
+          :transaction="transaction"
+          @deleted="refreshTransactions"
+        />
       </div>
     </section>
   </div>
