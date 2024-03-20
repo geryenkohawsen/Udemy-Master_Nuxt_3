@@ -1,70 +1,21 @@
 <script setup lang="ts">
 const selectedTransactionView = ref(CONST.TRANSACTION_VIEW_OPTIONS[1])
 
-const supabase = useSupabaseClient()
-const transactions = ref<Transaction[] | undefined>([])
-const isLoading = ref<boolean>(false)
-// const isPageValid = ref<boolean>(false)
 const isModalOpen = ref<boolean>(false)
 
-const income = computed(() => transactions.value?.filter(t => t.type === 'Income'))
-const incomeCount = computed(() => income.value?.length)
-const incomeTotal = computed(() => income.value?.reduce((sum, t) => sum + t.amount, 0))
-const expense = computed(() => transactions.value?.filter(t => t.type === 'Expense'))
-const expenseCount = computed(() => expense.value?.length)
-const expenseTotal = computed(() => income.value?.reduce((sum, t) => sum + t.amount, 0))
+const {
+  pending,
+  refreshTransactions,
+  transactions: {
+    incomeCount,
+    expenseCount,
+    incomeTotal,
+    expenseTotal,
+    grouped: { byDate },
+  },
+} = useFetchTransactions()
 
-const fetchTransactions = async (): Promise<Transaction[] | undefined> => {
-  isLoading.value = true
-  try {
-    const { data } = await useAsyncData('transactions', async () => {
-      const { data, error } = await supabase.from('transactions').select().order('created_at', { ascending: false })
-
-      if (error) return []
-
-      return data as Transaction[]
-    })
-
-    if (data.value) return data.value
-  } catch (error) {
-    console.error('Fetch Transactions Error:', error)
-    // TODO: Handle the error appropriately here
-    // e.g., setErrorState(error), showErrorMessage(...)
-    return undefined
-  } finally {
-    isLoading.value = false
-  }
-}
-
-const refreshTransactions = async (): Promise<void> => {
-  transactions.value = await fetchTransactions()
-}
 await refreshTransactions()
-
-// sorted transactions base on date
-const transactionsGroupedByDate = computed(() => {
-  if (!transactions.value) return undefined
-
-  const grouped = {} as { [key: string]: Transaction[] }
-
-  for (const transaction of transactions.value) {
-    // take only date data from tie ISO format
-    const date = new Date(transaction.created_at).toISOString().split('T')[0]
-
-    // add date as object key if there is none yet
-    if (!grouped[date]) grouped[date] = []
-
-    // add transaction to grouped object
-    grouped[date].push(transaction)
-  }
-
-  // TODO: sort key from latest date
-  console.log('grouped → ', grouped)
-
-  return grouped
-})
-
-console.log('transactionsGroupedByDate → ', transactionsGroupedByDate.value)
 </script>
 
 <template>
@@ -77,12 +28,12 @@ console.log('transactionsGroupedByDate → ', transactionsGroupedByDate.value)
     </section>
 
     <section class="mb-10 grid grid-cols-1 sm:grid-cols-2 sm:gap-16 lg:grid-cols-4">
-      <AppTrend v-if="incomeTotal" title="Income" :amount="incomeTotal" :last-amount="3000" :is-loading="isLoading" />
+      <AppTrend v-if="incomeTotal" title="Income" :amount="incomeTotal" :last-amount="3000" :is-loading="pending" />
       <USkeleton v-else class="h-full w-full" />
-      <AppTrend v-if="expenseTotal" title="Expense" :amount="expenseTotal" :last-amount="5000" :is-loading="isLoading" />
+      <AppTrend v-if="expenseTotal" title="Expense" :amount="expenseTotal" :last-amount="5000" :is-loading="pending" />
       <USkeleton v-else class="h-full w-full" />
-      <AppTrend title="Investments" :amount="4000" :last-amount="3000" :is-loading="isLoading" />
-      <AppTrend title="Saving" :amount="4000" :last-amount="4200" :is-loading="isLoading" />
+      <AppTrend title="Investments" :amount="4000" :last-amount="3000" :is-loading="pending" />
+      <AppTrend title="Saving" :amount="4000" :last-amount="4200" :is-loading="pending" />
     </section>
 
     <section class="mb-10 flex justify-between">
@@ -96,11 +47,11 @@ console.log('transactionsGroupedByDate → ', transactionsGroupedByDate.value)
       </div>
     </section>
 
-    <section v-if="isLoading">
+    <section v-if="pending">
       <USkeleton v-for="i in 4" :key="i" class="mb-2 h-8 w-full" />
     </section>
     <section v-else>
-      <div v-for="(transactionsByDate, date) in transactionsGroupedByDate" :key="date">
+      <div v-for="(transactionsByDate, date) in byDate" :key="date">
         <AppDailyTransactionSummary :date="date.toString()" :transactions="transactionsByDate" />
         <AppTransaction v-for="transaction in transactionsByDate" :key="transaction.id" :transaction="transaction" @deleted="refreshTransactions" />
       </div>
