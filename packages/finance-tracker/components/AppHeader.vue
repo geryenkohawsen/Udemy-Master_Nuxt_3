@@ -1,3 +1,19 @@
+<script setup lang="ts">
+const user = useSupabaseUser()
+
+watch(
+  user,
+  user => {
+    if (user) {
+      alert('Signed in!')
+    }
+  },
+  {
+    immediate: true,
+  }
+)
+</script>
+
 <template>
   <header class="mt-10 flex items-center justify-between">
     <NuxtLink to="/" class="text-xl font-bold">Finance Tracker</NuxtLink>
