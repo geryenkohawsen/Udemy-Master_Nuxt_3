@@ -7,6 +7,6 @@ export default defineNuxtConfig({
     lintOnStart: false,
   },
   supabase: {
-    redirect: false, // false for development
+    redirect: true, // false for development
   },
 })
