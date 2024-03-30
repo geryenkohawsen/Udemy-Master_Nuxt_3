@@ -8,7 +8,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['deleted'])
 
-const isIncome = computed(() => props.transaction.type === 'income')
+const isIncome = computed(() => props.transaction.type === 'Income')
 const currency = useLocaleCurrency(props.transaction.amount)
 
 const isLoading = ref(false)
