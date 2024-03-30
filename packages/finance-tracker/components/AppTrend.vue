@@ -27,7 +27,7 @@ const isTrendingUp = computed(() => props.amount >= props.lastAmount)
 const icon = computed(() => (isTrendingUp.value ? 'i-heroicons-arrow-trending-up' : 'i-heroicons-arrow-trending-down'))
 
 // amount in locale format and currency symbol
-const localeAmount = useLocaleCurrency(amount)
+const localeAmount = useLocaleCurrency(amount.value)
 
 // current trend percentage
 const percentageTrend = computed(() => {
