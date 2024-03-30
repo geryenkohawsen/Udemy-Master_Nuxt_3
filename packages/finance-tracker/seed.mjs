@@ -2,13 +2,9 @@ import { createClient } from '@supabase/supabase-js'
 import { faker } from '@faker-js/faker'
 import 'dotenv/config'
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRkd2liY253dHdoZm5zbmJsZHRhIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwODE4MTY3NiwiZXhwIjoyMDIzNzU3Njc2fQ.Q2hDloGQ3J7TdT90jN9PQY5Y3IpmDB_mHgCby0tmte8',
-  {
-    auth: { persistSession: false },
-  }
-)
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY, {
+  auth: { persistSession: false },
+})
 const categories = ['Food', 'Housing', 'Car', 'Entertainment', 'Transport']
 
 const {
