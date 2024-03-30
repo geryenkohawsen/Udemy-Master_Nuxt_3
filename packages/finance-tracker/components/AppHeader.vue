@@ -4,7 +4,6 @@ const user = useSupabaseUser()
 const items = [
   [
     {
-      label: user.value?.email,
       slot: 'account',
       disabled: true,
     },
@@ -44,7 +43,7 @@ const items = [
       </template>
 
       <template #item="{ item }">
-        <span class="truncate">{{ item.label }}</span>
+        <span class="truncate">{{ user.email }}</span>
 
         <UIcon :name="item.icon" class="ms-auto h-4 w-4 flex-shrink-0 text-gray-400 dark:text-gray-500" />
       </template>
