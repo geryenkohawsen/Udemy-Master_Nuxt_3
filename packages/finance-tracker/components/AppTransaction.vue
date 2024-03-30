@@ -12,7 +12,7 @@ const isIncome = computed(() => props.transaction.type === 'Income')
 const currency = useLocaleCurrency(props.transaction.amount)
 
 const isLoading = ref(false)
-const toast = useToast()
+const { toastSuccess, toastError } = useAppToast()
 const supabase = useSupabaseClient()
 
 async function deleteTransaction(): Promise<void> {
@@ -20,17 +20,13 @@ async function deleteTransaction(): Promise<void> {
 
   try {
     await supabase.from('transactions').delete().eq('id', props.transaction.id)
-    toast.add({
+    toastSuccess({
       title: 'Transaction delete!',
-      icon: 'i-heroicons-check-circle',
-      color: 'green',
     })
     emit('deleted', props.transaction.id)
   } catch (error) {
-    toast.add({
+    toastError({
       title: 'Transaction delete!',
-      icon: 'i-heroicons-exclamation-circle',
-      color: 'red',
     })
   } finally {
     isLoading.value = false
