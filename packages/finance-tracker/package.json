@@ -30,6 +30,7 @@
     "@faker-js/faker": "^8.4.1",
     "@nuxtjs/supabase": "^1.1.6",
     "date-fns": "^3.6.0",
+    "dayjs-nuxt": "^2.1.9",
     "typescript": "^5.3.3",
     "zod": "^3.22.4"
   }
