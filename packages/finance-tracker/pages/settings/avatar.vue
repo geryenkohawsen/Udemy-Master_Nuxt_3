@@ -42,7 +42,7 @@ async function saveAvatar() {
 
   if (error) {
     toastError({
-      title: 'Error updating avatar',
+      title: 'Error uploading avatar',
       description: error.message,
     })
   }
@@ -53,6 +53,15 @@ async function saveAvatar() {
     },
   })
   // 4. (OPTIONALLY) remove the old avatar file
+  if (currentAvatarUrl) {
+    const { error } = await supabase.storage.from('avatars').remove([currentAvatarUrl])
+    if (error) {
+      toastError({
+        title: 'Error updating avatar',
+        description: error.message,
+      })
+    }
+  }
   // 5. Reset the file input
   fileInput.value.input.value = null
 
