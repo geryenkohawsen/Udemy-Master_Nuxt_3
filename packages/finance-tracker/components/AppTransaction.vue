@@ -13,9 +13,9 @@ const currency = useLocaleCurrency(props.transaction.amount)
 
 const isLoading = ref(false)
 const { toastSuccess, toastError } = useAppToast()
-const supabase = useSupabaseClient()
+const supabase = useSupabaseClient<Database>()
 
-async function deleteTransaction(): Promise<void> {
+async function deleteTransaction() {
   isLoading.value = true
 
   try {

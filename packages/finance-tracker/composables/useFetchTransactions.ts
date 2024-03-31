@@ -1,5 +1,5 @@
 export const useFetchTransactions = (period: ComputedRef<{ from: Date; to: Date }>) => {
-  const supabase = useSupabaseClient()
+  const supabase = useSupabaseClient<Database>()
   const transactions = ref<Transaction[] | undefined>([])
   const pending = ref<boolean>(false)
 

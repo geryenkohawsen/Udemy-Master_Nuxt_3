@@ -37,7 +37,7 @@ const formSchema = z.intersection(z.discriminatedUnion('type', [incomeSchema, ex
 
 const form = ref()
 const isLoading = ref(false)
-const supabase = useSupabaseClient()
+const supabase = useSupabaseClient<Database>()
 const { toastSuccess, toastError } = useAppToast()
 
 async function save() {
@@ -45,7 +45,7 @@ async function save() {
 
   isLoading.value = true
   try {
-    const { error } = await supabase.from('transactions').upsert({ ...formState.value })
+    const { error } = await supabase.from('transactions').upsert({ ...formState.value } as any)
 
     if (!error) {
       toastSuccess({
@@ -73,11 +73,11 @@ const initialState = {
   description: undefined,
   category: undefined,
 }
-const formState = ref({
+const formState = ref<NewTransaction>({
   ...initialState,
 })
 
-function resetForm(): void {
+function resetForm() {
   Object.assign(formState.value, initialState)
   form.value.clear()
 }

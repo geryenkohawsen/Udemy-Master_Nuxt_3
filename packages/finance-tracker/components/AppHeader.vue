@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const supabase = useSupabaseClient()
+const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
 const items = [
   [
@@ -12,7 +12,9 @@ const items = [
     {
       label: 'Settings',
       icon: 'i-heroicons-cog-8-tooth',
-      click: () => navigateTo('/settings'),
+      click: () => {
+        navigateTo('/settings')
+      },
     },
     {
       label: 'Sign out',
@@ -20,7 +22,7 @@ const items = [
       click: async () => {
         console.log('Sign out')
         await supabase.auth.signOut()
-        return navigateTo('/login')
+        navigateTo('/login')
       },
     },
   ],

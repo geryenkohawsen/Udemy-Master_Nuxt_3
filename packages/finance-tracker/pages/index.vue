@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const selectedTransactionView = ref(CONST.TRANSACTION_VIEW_OPTIONS[1])
+const user = useSupabaseUser()
+const selectedTransactionView = ref(user.value?.user_metadata?.['transaction_view'] ?? CONST.TRANSACTION_VIEW_OPTIONS[1])
 const { current, previous } = useSelectedTimePeriod(selectedTransactionView)
 const isModalOpen = ref<boolean>(false)
 

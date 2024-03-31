@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { z } from 'zod'
 
-const supabase = useSupabaseClient()
+const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
 
 const { toastSuccess, toastError } = useAppToast()
@@ -17,7 +17,7 @@ const schema = z.object({
   email: z.string().email(),
 })
 
-async function saveProfile() {
+async function saveProfile(): Promise<void> {
   pending.value = true
 
   // Only add `full_name` and `email` if it's different from the current profile in the database
