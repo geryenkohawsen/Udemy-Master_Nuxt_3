@@ -5,6 +5,7 @@ const dayjs = useDayjs()
 
 // We need to get the actual avatar URL
 const { toastSuccess, toastError } = useAppToast()
+const { url } = useAvatarUrl()
 
 const uploading = ref(false)
 const fileInput = ref() // Reference to an input with ref="fileInput" attribute
@@ -77,7 +78,8 @@ async function saveAvatar() {
   <div>
     <div class="mb-4">
       <UFormGroup label="Current avatar" class="w-full" help="This would be blank by default">
-        <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" size="3xl" />
+        <UAvatar v-if="url" :src="url" size="3xl" />
+        <UAvatar v-else icon="i-heroicons-photo" size="3xl" />
       </UFormGroup>
     </div>
 

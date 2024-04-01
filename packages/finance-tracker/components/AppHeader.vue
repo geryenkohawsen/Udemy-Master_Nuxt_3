@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient<Database>()
 const user = useSupabaseUser()
+const { url } = useAvatarUrl()
+
 const items = [
   [
     {
@@ -33,7 +35,8 @@ const items = [
   <header class="mt-10 flex items-center justify-between">
     <NuxtLink to="/" class="text-xl font-bold">Finance Tracker</NuxtLink>
     <UDropdown v-if="user" :items="items" :ui="{ item: { disabled: 'cursor-text select-text' }, width: 'w-64' }">
-      <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" alt="Avatar" />
+      <UAvatar v-if="url" :src="url" alt="Avatar" />
+      <UAvatar v-else icon="i-heroicons-photo" alt="Avatar" />
 
       <template #account>
         <div class="text-left">
