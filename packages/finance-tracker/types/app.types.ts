@@ -3,14 +3,14 @@ export interface Transaction {
   created_at: string
   amount: number
   type: 'Income' | 'Expense' | 'Saving' | 'Investment'
-  description: string
-  category: string
+  description?: string
+  category?: string
 }
 
 export interface NewTransaction {
-  created_at?: string
+  created_at: string
   amount: number
-  type?: 'Income' | 'Expense' | 'Saving' | 'Investment'
+  type: 'Income' | 'Expense' | 'Saving' | 'Investment'
   description?: string
   category?: string
 }

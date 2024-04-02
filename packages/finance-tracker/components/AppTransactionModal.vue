@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { z } from 'zod'
 
+const props = defineProps<{
+  transaction?: Transaction
+}>()
 const emit = defineEmits(['saved'])
+const isEditing = computed(() => !!props.transaction)
 
 const isOpen = defineModel<boolean>('isOpen', {
   set(value) {
@@ -45,7 +49,7 @@ async function save() {
 
   isLoading.value = true
   try {
-    const { error } = await supabase.from('transactions').upsert({ ...formState.value } as any)
+    const { error } = await supabase.from('transactions').upsert({ ...formState.value, id: props.transaction?.id } as any)
 
     if (!error) {
       toastSuccess({
@@ -73,9 +77,17 @@ const initialState = {
   description: undefined,
   category: undefined,
 }
-const formState = ref<NewTransaction>({
-  ...initialState,
-})
+const formState = ref<NewTransaction>(
+  isEditing.value
+    ? {
+        type: props.transaction?.type,
+        amount: props.transaction?.amount,
+        created_at: props.transaction?.created_at,
+        description: props.transaction?.description,
+        category: props.transaction?.category,
+      }
+    : { ...initialState }
+)
 
 function resetForm() {
   Object.assign(formState.value, initialState)
@@ -86,11 +98,11 @@ function resetForm() {
 <template>
   <UModal v-model="isOpen">
     <UCard>
-      <template #header>Add Transaction</template>
+      <template #header>{{ isEditing ? 'Edit' : 'Add' }} Transaction</template>
 
       <UForm ref="form" :state="formState" :schema="formSchema" class="flex flex-col gap-4" @submit="save">
         <UFormGroup label="Transaction Type" :required="true" name="type">
-          <USelect v-model="formState.type" type="number" placeholder="Select the transaction Type" :options="CONST.TRANSACTION_TYPES" />
+          <USelect v-model="formState.type" type="number" placeholder="Select the transaction Type" :disabled="isEditing" :options="CONST.TRANSACTION_TYPES" />
         </UFormGroup>
 
         <UFormGroup label="Amount" :required="true" name="amount">
