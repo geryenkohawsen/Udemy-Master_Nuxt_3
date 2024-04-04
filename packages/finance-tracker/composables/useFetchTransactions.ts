@@ -51,7 +51,7 @@ export const useFetchTransactions = (period: ComputedRef<{ from: Date; to: Date 
 
     for (const transaction of transactions.value) {
       // take only date data from tie ISO format
-      const date = new Date(transaction.created_at).toISOString().split('T')[0]
+      const date = transaction.created_at.split('T')[0]
 
       // add date as object key if there is none yet
       if (!grouped[date]) grouped[date] = []

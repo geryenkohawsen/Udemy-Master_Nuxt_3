@@ -70,24 +70,23 @@ async function save() {
   // Store into Supabase
 }
 
-const initialState = {
-  type: undefined,
-  amount: 0,
-  created_at: undefined,
-  description: undefined,
-  category: undefined,
-}
-const formState = ref<NewTransaction>(
-  isEditing.value
-    ? {
-        type: props.transaction?.type,
-        amount: props.transaction?.amount,
-        created_at: props.transaction?.created_at.split('T')[0],
-        description: props.transaction?.description,
-        category: props.transaction?.category,
-      }
-    : { ...initialState }
-)
+const initialState = isEditing.value
+  ? {
+      type: props.transaction?.type,
+      amount: props.transaction?.amount,
+      created_at: props.transaction?.created_at.split('T')[0],
+      description: props.transaction?.description,
+      category: props.transaction?.category,
+    }
+  : {
+      type: undefined,
+      amount: 0,
+      created_at: undefined,
+      description: undefined,
+      category: undefined,
+    }
+
+const formState = ref<NewTransaction>({ ...initialState })
 
 function resetForm() {
   Object.assign(formState.value, initialState)
