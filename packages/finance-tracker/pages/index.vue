@@ -62,7 +62,13 @@ await refreshPreviousTransactions()
     <section v-else>
       <div v-for="(transactionsByDate, date) in byDate" :key="date">
         <AppDailyTransactionSummary :date="date.toString()" :transactions="transactionsByDate" />
-        <AppTransaction v-for="transaction in transactionsByDate" :key="transaction.id" :transaction="transaction" @deleted="refreshTransactions" />
+        <AppTransaction
+          v-for="transaction in transactionsByDate"
+          :key="transaction.id"
+          :transaction="transaction"
+          @deleted="refreshTransactions"
+          @edited="refreshTransactions"
+        />
       </div>
     </section>
   </div>

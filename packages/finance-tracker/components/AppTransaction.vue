@@ -6,7 +6,7 @@ const props = defineProps<{
   transaction: Transaction
 }>()
 
-const emit = defineEmits(['deleted'])
+const emit = defineEmits(['deleted', 'edited'])
 
 const isIncome = computed(() => props.transaction.type === 'Income')
 const currency = useLocaleCurrency(props.transaction.amount)
@@ -14,6 +14,8 @@ const currency = useLocaleCurrency(props.transaction.amount)
 const isLoading = ref(false)
 const { toastSuccess, toastError } = useAppToast()
 const supabase = useSupabaseClient<Database>()
+
+const isOpen = ref(false)
 
 async function deleteTransaction() {
   isLoading.value = true
@@ -38,7 +40,7 @@ const optionItems = [
     {
       label: 'Edit',
       icon: 'i-heroicons-pencil-square-20-solid',
-      click: (): void => console.log('Edit'),
+      click: () => (isOpen.value = true),
     },
     {
       label: 'Delete',
@@ -67,6 +69,7 @@ const optionItems = [
       <div>
         <UDropdown :items="optionItems" :popper="{ placement: 'bottom-start' }">
           <UButton color="white" variant="ghost" trailing-icon="i-heroicons-ellipsis-horizontal" :loading="isLoading" />
+          <AppTransactionModal v-model="isOpen" :transaction="transaction" @saved="emit('edited')" />
         </UDropdown>
       </div>
     </div>
