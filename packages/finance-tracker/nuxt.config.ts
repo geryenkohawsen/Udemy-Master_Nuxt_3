@@ -6,6 +6,11 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['types/**'],
   },
+  runtimeConfig: {
+    public: {
+      baseUrl: process.env.BASE_URL ?? 'http://localhost:3000'
+    },
+  },
   eslint: {
     lintOnStart: false,
   },
