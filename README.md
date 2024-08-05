@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://skillicons.dev">
-    <img height=100 src="https://skillicons.dev/icons?i=vue,nuxt" />
+    <img height=100 src="https://skillicons.dev/icons?i=vue,nuxt,supabase" />
   </a>
 </p>
 <h3 align="center">Master Nuxt 3 - Full-Stack Complete Guide</h3>
